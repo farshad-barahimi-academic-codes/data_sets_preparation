@@ -49,7 +49,7 @@ func (emailFeaturesPreparation EmailFeaturesPreparation) Prepare(dataSetPreparat
 
 	fmt.Println("Number of initial parsed words:", len(initialParsedWords))
 	stopWordsFilteredWords := filterStopWords(initialParsedWords)
-	fmt.Println("Number of stop words filtered words:", len(initialParsedWords))
+	fmt.Println("Number of stop words filtered words:", len(stopWordsFilteredWords))
 	basicFilteredWords := filterWordsLexical(stopWordsFilteredWords)
 	fmt.Println("Number of basic filtered words:", len(basicFilteredWords))
 
@@ -71,7 +71,7 @@ func (emailFeaturesPreparation EmailFeaturesPreparation) Prepare(dataSetPreparat
 
 	perEmailCosineTailoredFeatures := computePerEmailCosineTailoredFeatures(numberOfEmails, secondFreqFilteredWords, perEmailSignificanceForSecondFreqFilteredWords, perEmailSignificanceRanksForSecondFreqFilteredWords, emailsDirectoryNumbers)
 	perEmailCosineTailoredFeaturesAndDirectoryNumber := combineFeaturesWithEmailDirectoryNumber(perEmailCosineTailoredFeatures, emailsDirectoryNumbers)
-	scrambleTheSortingOfEmailsAndWriteToFile(numberOfEmails, perEmailCosineTailoredFeaturesAndDirectoryNumber, filepath.Join(outputDirectory, "Temporary_files", "email_features.csv"))
+	scrambleTheSortingOfEmailsAndWriteToFile(numberOfEmails, perEmailCosineTailoredFeaturesAndDirectoryNumber, filepath.Join(outputDirectory, "Final_files", "emails_features.csv"))
 	computeKnnClassificationAccuracy(perEmailCosineTailoredFeaturesAndDirectoryNumber, 10)
 }
 
@@ -633,7 +633,7 @@ func scrambleTheSortingOfEmailsAndWriteToFile(numberOfEmails int, toBeShuffled [
 }
 
 func computeKnnClassificationAccuracy(shuffled [][]uint8, k int) {
-	fmt.Println("Computing KNN classification accuracy")
+	fmt.Println("Computing KNN majority voting classification accuracy")
 
 	numberOfEmails := len(shuffled)
 	numberOfFeatures := len(shuffled[0]) - 1
