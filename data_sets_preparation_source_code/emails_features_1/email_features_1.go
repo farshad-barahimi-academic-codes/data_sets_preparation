@@ -730,7 +730,7 @@ func computeKnnClassificationAccuracy(shuffled [][]uint8, k int) {
 	for directoryNumber1 = 0; directoryNumber1 < numberOfDirectories; directoryNumber1++ {
 		for directoryNumber2 = 0; directoryNumber2 < numberOfDirectories; directoryNumber2++ {
 			var confusion float64 = float64(confusionMatrix[directoryNumber1][directoryNumber2]) / float64(numberOfEmails)
-			fmt.Print(strconv.FormatFloat(confusion, 'f', 4, 64))
+			fmt.Print(strconv.FormatFloat(confusion, 'f', 4, 64), " , ")
 		}
 		fmt.Println()
 	}
