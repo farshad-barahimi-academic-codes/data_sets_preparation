@@ -536,7 +536,11 @@ func computePerEmailCosineTailoredFeatures(numberOfEmails int, secondFilteredFre
 	for i := 0; i <= maximumDirectoryNumber; i++ {
 		averageNumberOfNonZeroPrimaryFeaturesPerEmailPerDirectoryNumber[i] /= float64(numberOfSelectedEmailPerDirectoryNumber[i])
 		standardDeviationOfNumberOfNonZeroPrimaryFeaturesPerEmailPerDirectoryNumber[i] = math.Sqrt(standardDeviationOfNumberOfNonZeroPrimaryFeaturesPerEmailPerDirectoryNumber[i] / float64(numberOfSelectedEmailPerDirectoryNumber[i]))
-		fmt.Println("\t", i, ":", "(average:", averageNumberOfNonZeroPrimaryFeaturesPerEmailPerDirectoryNumber[i], ") , (standard deviation:", standardDeviationOfNumberOfNonZeroPrimaryFeaturesPerEmailPerDirectoryNumber[i], ")")
+		fmt.Println("\t", i, ":",
+			"(average:", strconv.FormatFloat(averageNumberOfNonZeroPrimaryFeaturesPerEmailPerDirectoryNumber[i], 'f', 3, 64),
+			") , (standard deviation:",
+			strconv.FormatFloat(standardDeviationOfNumberOfNonZeroPrimaryFeaturesPerEmailPerDirectoryNumber[i], 'f', 3, 64),
+			")")
 	}
 	fmt.Println()
 	/////////////////////////
@@ -705,7 +709,9 @@ func computeKnnClassificationAccuracy(shuffled [][]uint8, k int) {
 
 		var maxOccurrenceDirectoryNumber uint8 = 0
 		maxOccurrences := -1
-		for directoryNumber, occurrences := range neighboursDirectoryNumberOccurrences {
+		var directoryNumber uint8
+		for directoryNumber = 0; directoryNumber < numberOfDirectories; directoryNumber++ {
+			occurrences := neighboursDirectoryNumberOccurrences[directoryNumber]
 			if occurrences > maxOccurrences {
 				maxOccurrenceDirectoryNumber = directoryNumber
 				maxOccurrences = occurrences
@@ -730,7 +736,7 @@ func computeKnnClassificationAccuracy(shuffled [][]uint8, k int) {
 	for directoryNumber1 = 0; directoryNumber1 < numberOfDirectories; directoryNumber1++ {
 		for directoryNumber2 = 0; directoryNumber2 < numberOfDirectories; directoryNumber2++ {
 			var confusion float64 = float64(confusionMatrix[directoryNumber1][directoryNumber2]) / float64(numberOfEmails)
-			fmt.Print(strconv.FormatFloat(confusion, 'f', 4, 64), " , ")
+			fmt.Print(strconv.FormatFloat(confusion*100, 'f', 2, 64), "% , ")
 		}
 		fmt.Println()
 	}
