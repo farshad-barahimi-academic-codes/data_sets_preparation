@@ -42,13 +42,20 @@ func main() {
 		parameters := strings.Split(args[5], ",")
 		emails_features_1.Run(outputDirectory, prefixOfInputDownloadURLs, inputDownloadURLs, parameters)
 	} else if dataSetPreparationType == "genomes_preparation_1" {
-		if len(args) != 3 {
+		if len(args) != 3 && len(args) != 4 {
 			fmt.Println("Not finished successfully. Incorrect number of arguments.")
 			return
 		}
 		outputDirectory := args[2]
+		if len(args) == 3 {
+			genomes_distances.PrepareGenomes1(outputDirectory, nil)
+		} else {
+			if args[3] == "" {
+				panic("Not finished successfully.")
+			}
+			genomes_distances.PrepareGenomes1(outputDirectory, args[3])
+		}
 
-		genomes_distances.PrepareGenomes1(outputDirectory)
 	} else if dataSetPreparationType == "genomes_distances_1" {
 		if len(args) != 3 {
 			fmt.Println("Not finished successfully. Incorrect number of arguments.")
