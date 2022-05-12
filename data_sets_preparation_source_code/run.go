@@ -11,6 +11,7 @@ package main
 import (
 	"fmt"
 	"github.com/farshad-barahimi-academic-codes/data_sets_preparation/emails_features_1"
+	"github.com/farshad-barahimi-academic-codes/data_sets_preparation/genomes_distances"
 	"os"
 	"strings"
 )
@@ -31,7 +32,7 @@ func main() {
 	dataSetPreparationType := args[1]
 
 	if dataSetPreparationType == "emails_features_1" {
-		if len(args) < 6 {
+		if len(args) != 6 {
 			fmt.Println("Not finished successfully. Incorrect number of arguments.")
 			return
 		}
@@ -40,6 +41,14 @@ func main() {
 		inputDownloadURLs := args[4]
 		parameters := strings.Split(args[5], ",")
 		emails_features_1.Run(outputDirectory, prefixOfInputDownloadURLs, inputDownloadURLs, parameters)
+	} else if dataSetPreparationType == "genomes_distances_1" {
+		if len(args) != 3 {
+			fmt.Println("Not finished successfully. Incorrect number of arguments.")
+			return
+		}
+		outputDirectory := args[2]
+
+		genomes_distances.PrepareGenomeDistances1(outputDirectory)
 	} else {
 		fmt.Println("Not finished successfully.")
 		return

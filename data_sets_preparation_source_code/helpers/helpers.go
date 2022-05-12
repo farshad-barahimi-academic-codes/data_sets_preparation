@@ -31,7 +31,7 @@ type DataSetPreparationInformation struct {
 }
 
 func (dataSetPreparationInformation *DataSetPreparationInformation) BasePreparation(outputDirectory string) {
-	onlySpecificPreparation := false
+	onlySpecificPreparation := true
 
 	if !onlySpecificPreparation {
 		_, err := os.Stat(outputDirectory)
@@ -197,6 +197,11 @@ func uncompressZip(compressedFile string, uncompressedDirectory string) {
 			if !strings.HasPrefix(filePath, uncompressedDirectory) {
 				panic("Not finished successfully.")
 			}
+			_, err := os.Stat(filepath.Dir(filePath))
+			if os.IsNotExist(err) {
+				os.MkdirAll(filepath.Dir(filePath), 600)
+			}
+
 			uncompressedFile, err := os.Create(filePath)
 			if err != nil {
 				panic("Not finished successfully.")
