@@ -19,6 +19,7 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 type DataSetPreparationInformation struct {
@@ -28,12 +29,12 @@ type DataSetPreparationInformation struct {
 	Preparation               interface {
 		Prepare(dataSetPreparationInformation *DataSetPreparationInformation, outputDirectory string)
 	}
+	OnlySpecificPreparation bool
 }
 
-func (dataSetPreparationInformation *DataSetPreparationInformation) BasePreparation(outputDirectory string) {
-	onlySpecificPreparation := true
+func (dataSetPreparationInformation *DataSetPreparationInformation) Prepare(outputDirectory string) {
 
-	if !onlySpecificPreparation {
+	if !dataSetPreparationInformation.OnlySpecificPreparation {
 		_, err := os.Stat(outputDirectory)
 		if !os.IsNotExist(err) {
 			panic("Not finished successfully. Output directory already exists.")
@@ -102,6 +103,7 @@ func downloadFile(url string, filePath string) {
 	}
 
 	urlFileSize := headResponse.ContentLength
+	fmt.Println(time.Now().Format(time.UnixDate))
 	fmt.Println("Downloading...", url, "|Size ~=", urlFileSize/1024, "KB")
 
 	file, err := os.Create(filePath)
