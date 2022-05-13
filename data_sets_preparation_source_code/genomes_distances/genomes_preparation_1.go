@@ -31,7 +31,9 @@ func (genomesPreparation1 GenomesPreparation1) Prepare(dataSetPreparationInforma
 		"--split-par",
 		/* "b37" */ "2699520", "154931044",
 		"--allow-extra-chr",
-		"0")
+		"0",
+		"--memory",
+		"30000")
 
 	cmd.Dir = filepath.Join(outputDirectory, "Temporary_files")
 

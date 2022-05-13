@@ -28,7 +28,7 @@ func (genomesDistancesPreparation1 GenomesDistancesPreparation1) Prepare(dataSet
 
 	var debug bool = false
 
-	cmd := exec.Command(plinkPath, "--pfile", "genomes", "--make-rel")
+	cmd := exec.Command(plinkPath, "--pfile", "genomes", "--make-rel", "--memory", "30000")
 
 	cmd.Dir = filepath.Join(outputDirectory, "Temporary_files")
 
