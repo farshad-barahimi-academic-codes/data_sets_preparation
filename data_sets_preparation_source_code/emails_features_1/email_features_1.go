@@ -750,5 +750,5 @@ func Run(outputDirectory string, prefixOfInputDownloadURL string, inputDownloadU
 	dataSetsPreparationInformation.Parameters = parameters
 	dataSetsPreparationInformation.Preparation = EmailFeaturesPreparation{}
 
-	dataSetsPreparationInformation.BasePreparation(outputDirectory)
+	dataSetsPreparationInformation.Prepare(outputDirectory)
 }
